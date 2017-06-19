@@ -1,0 +1,193 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc} % codificacao de caracteres
+\usepackage[T1]{fontenc}    % codificacao de fontes
+\usepackage[brazil]{babel}  % idioma
+\usetheme{AnnArbor}         % tema
+\usecolortheme{orchid}      % cores
+\usefonttheme[onlymath]{serif} % fonte modo matematico
+% Titulo
+\title[\sc{Processamento de imagens}]{Processamento de imagens - Morfologia Matemática}
+\author[Alano Martins Pinto]{Alano Martins Pinto e Gildácio Sá}
+\institute{UECE - Universidade Estadual do Ceará} % opcional
+\date{\today}
+
+
+% Colocando numero de paginas no slide
+\setbeamertemplate{footline}[frame number]
+
+% Desativando os botoes de navegacao
+\beamertemplatenavigationsymbolsempty
+
+% Tela cheia\section{section1}
+
+\hypersetup{pdfpagemode=FullScreen}
+
+% Layout da pagina
+\hypersetup{pdfpagelayout=SinglePage}
+
+% Definicao de novos comandos
+\providecommand{\sin}{} \renewcommand{\sin}{\hspace{2pt}\textrm{sen}}
+\providecommand{\tan}{} \renewcommand{\tan}{\hspace{2pt}\textrm{tg}}
+\newcommand{\R}{\mathbb{R}}
+
+% Capa - requer o TikZ
+\newcommand{\capa}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node at (current page.south west)
+            {\begin{tikzpicture}[remember picture, overlay]
+                \fill[shading=radial,top color=orange,bottom color=orange,middle color=red] (0,0) rectangle (\paperwidth,\paperheight);
+            \end{tikzpicture}
+          };
+    \end{tikzpicture}
+}
+
+% Definicao de novos ambientes
+\theoremstyle{Definition}
+\newtheorem{defn}{Defini\c c\~ao}
+\newtheorem{teo}[theorem]{Teorema}
+\newtheorem{ex}[theorem]{Exemplo}
+\newtheorem{eq}[theorem]{Equa\c c\~ao}
+
+
+
+
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Tópicos}
+	\begin{itemize}
+		\item Conceitos
+		\item Teoria dos conjuntos
+		\item Operações lógicas
+		\item Dilatação e Erosão
+		\item Abertura e fechamento
+		\item Transformação Hit-or-miss
+		\item Extração de bordas
+		\item Extração de componentes conexas
+		\item Conver Hull
+		\item Thinning
+		\item Thickening
+		\item Esqueleto
+		\item Poda
+		\item Morfologia em escala de cinza
+	\end{itemize}
+
+\end{frame}
+
+
+% Frame 4: teoria dos conjuntos
+\begin{frame}\frametitle{Teoria dos conjuntos}
+
+União: $C = A \cap B $ 
+
+Interceção: $C = A \cup B $ 
+
+Subtração: $C = A - B $ 
+
+Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$ 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[height=0.3\paperheight]{imagens/basic_sets}
+    %\includegraphics[height=6cm]{figCoordEsf02}
+    \caption{Propriedades básicas de conjuntos}\label{figConjuntos}
+  \end{figure}
+
+\end{frame}
+
+
+% Frame 4: expressoes matematicas
+\begin{frame}
+	\frametitle{Complementar}
+	
+	\begin{defn}
+    	Conjunto de pontos que não estão em A
+	\end{defn}
+
+	\begin{eq}
+    	$A^{c} = \{w \,|\, w \not\in A  \}$ 
+	\end{eq}
+	
+  \begin{figure}[h]
+    \centering
+    \includegraphics[height=0.3\paperheight]{imagens/complementar}
+    %\includegraphics[height=6cm]{figCoordEsf02}
+    \caption{Complementar de conjuntos}\label{figComplementar}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Translação}
+	
+	\begin{defn}
+    	Move a origem de A para o ponto z
+	\end{defn}
+
+	\begin{eq}
+    	$(A)z = \{c \,|\, c = a + z$, para $ a \in A  \}$ 
+	\end{eq}
+	
+  \begin{figure}[h]
+    \centering
+    \includegraphics[height=0.3\paperheight]{imagens/translacao}
+    %\includegraphics[height=6cm]{figCoordEsf02}
+    \caption{Translação em vetor}\label{figTranslacao}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Reflexão}
+	
+	\begin{defn}
+    	Reflete todos os elementos de B sobrem a origme desse conjunto
+	\end{defn}
+
+	\begin{eq}
+    	$ B = \{w \,|\, w = -b$, para $ b \in B  \}$ 
+	\end{eq}
+	
+  \begin{figure}[h]
+    \centering
+    \includegraphics[height=0.3\paperheight]{imagens/reflect}
+    %\includegraphics[height=6cm]{figCoordEsf02}
+    \caption{Reflexão em figura}\label{figReflexao}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Operações lógicas (Binário) }
+	
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+		   \begin{itemize}
+				\item NOT
+				\item AND
+				\item OR
+				\item XOR
+				\item NOT-AND
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.7\textwidth}  %%<--- here
+    		\begin{figure}[h]
+	   	 		\includegraphics[width=4.4cm]{imagens/logical}
+			    \caption{Operações lógicas}\label{figLogical}
+	  		\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Dilatação}
+	
+	\begin{eq}
+    	$A \bigoplus  B = \{z \,|\, (B)_z  \cap A \neq \oslash \}$ 
+	\end{eq}
+\end{frame}
+
+\end{document}
