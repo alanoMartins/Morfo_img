@@ -1,76 +1,59 @@
 import numpy as np
-import math
 import cv2
+from morfology import Morfology
+
+DEBUG = False
 
 def erosion(img):
     kernel = np.ones((5, 5), np.uint8)
     return cv2.erode(img, kernel, iterations=1)
 
 def init():
+    cap = cv2.VideoCapture(0)
+    m = Morfology(True)
 
-    #cv2.namedWindow('Original')
-    cv2.namedWindow('Bin')
-    cv2.namedWindow('Result')
+    while (True):
+        # Capture frame-by-frame
+        ret, frame = cap.read()
 
-    img = cv2.imread('/home/alano/Pictures/Lobos.jpg', 0)
-    #cv2.imshow("Original", img)
-
-    while (1):
-        k = cv2.waitKey(1) & 0xFF
-        if k == 27:
-            exit()
-        if k == ord('e'):
-            blur = cv2.GaussianBlur(img, (5, 5), 0)
-            rect, th1 = cv2.threshold(blur, 127, 255, cv2.THRESH_BINARY)
-            cv2.imshow("Bin", th1)
-            res = erosion(th1)
-            cv2.imshow("Result", res)
-        if k == ord('d'):
-            blur = cv2.GaussianBlur(img, (5, 5), 0)
-            rect, th1 = cv2.threshold(blur, 127, 255, cv2.THRESH_BINARY)
-            cv2.imshow("Bin", th1)
-            res = dilate(th1, 1)
-            cv2.imshow("Result", res)
-
-def erosion(img):
-    for col in range(len(img)):
-        for row in range(len(img[col])):
-            if img[col, row] == 1:
-                if col > 0 and img[col-1][row] == 0: img[col - 1][row] = 2
-                if row > 0 and img[col][row - 1] == 0: img[col][row - 1] = 2
-                if col + 1 < len(img) and img[col + 1][row] == 0: img[col + 1][row] = 2
-                if row + 1 < len(img[col]) and img[col][row + 1] == 0: img[col][row + 1] = 2
-
-    for col in range(len(img)):
-        for row in range(len(img[col])):
-            if(img[col][row] == 2): img[col][row] = 1
-
-    return img
-
-def dilate(img, k):
-
-    mar = manhattan(img)
-    for col in range(len(mar)):
-        for row in range(len(mar[col])):
-            mar[col][row] = 1 if mar[col][row] <= k else 0
-
-    return mar
+        # Our operations on the frame come here
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #bw = prepare(gray)
+        ret, bw = cv2.threshold(gray, 127, 255, 0)
+        #result = m.flood(bw)
+        result = m.extract_boundry(bw)
 
 
-def manhattan(img):
-    for col in reversed(range(len(img))):
-        for row in reversed(range(len(img[col]))):
-            if (img[col][row] == 1): img[col][row] = 0
-            else:
-                img[col][row] = len(img) + len(img[col])
-                if col > 0: img[col][row] = min(img[col][row], img[col - 1][row] + 1)
-                if row > 0: img[col][row] = min(img[col][row], img[col][row - 1] + 1)
 
-    for col in range(len(img)):
-        for row in range(len(img[col])):
-            if col + 1 < len(img): img[col][row] = min(img[col][row], img[col + 1][row] + 1)
-            if row + 1 < len(img[col]): img[col][row] = min(img[col][row], img[col][row + 1] + 1)
 
-    return img
+
+        # Display the resulting frame
+        cv2.imshow('frame', result)
+        cv2.imshow('cnt', gray)
+        cv2.imshow('bw', bw)
+        #cv2.imshow('hull', hull)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    # When everything done, release the capture
+    cap.release()
+    cv2.destroyAllWindows()
+
+def prepare(image):
+    blur = cv2.GaussianBlur(image, (5, 5), 0)
+    rect, th1 = cv2.threshold(blur, 0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    return th1
+
+def contour(gray, bw):
+    m = Morfology(True)
+    result, contours, hierarchy = m.extract_boundry(bw)
+
+    cv2.drawContours(gray, contours, -1, (0, 255, 0), 3)
+    cv2.imshow('cnt', gray)
+    cv2.imshow('bw', bw)
+
+
+
+
 
 init()
