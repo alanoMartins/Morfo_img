@@ -1,10 +1,16 @@
 \documentclass[aspectratio=169]{beamer}
+
 \usepackage[utf8]{inputenc} % codificacao de caracteres
 \usepackage[T1]{fontenc}    % codificacao de fontes
 \usepackage[brazil]{babel}  % idioma
-\usetheme{AnnArbor}         % tema
-\usecolortheme{orchid}      % cores
+
+
+\usetheme{Berlin}         % tema
+\usecolortheme{seahorse}      % cores
+
 \usefonttheme[onlymath]{serif} % fonte modo matematico
+\usepackage{amsthm}
+
 % Titulo
 \title[\sc{Processamento de imagens}]{Processamento de imagens - Morfologia Matemática}
 \author[Alano Martins Pinto]{Alano Martins Pinto e Gildácio Sá}
@@ -40,6 +46,7 @@
           };
     \end{tikzpicture}
 }
+
 
 % Definicao de novos ambientes
 \theoremstyle{Definition}
@@ -183,11 +190,140 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 \end{frame}
 
 \begin{frame}
-	\frametitle{Dilatação}
+	\frametitle{Extração de bordas}
+	
+	\begin{defn}
+    	Extrai bordas do pixels frontal. Realiza uma erosão e após a diferença do conjunto A com o resultado.
+	\end{defn}
 	
 	\begin{eq}
-    	$A \bigoplus  B = \{z \,|\, (B)_z  \cap A \neq \oslash \}$ 
+    	$ \beta(A) = A  - (A \circleddash B)$ 
 	\end{eq}
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+	  		 	\includegraphics[width=4cm, height=0.25\paperheight]{imagens/border_ex1}
+				\caption{Extração de bordas 1}\label{figLogical}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+			   	\includegraphics[width=4cm, height=0.25\paperheight]{imagens/border_ex2}
+				\caption{Extração de bordas 2}\label{figLogical}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Preenchimento de regiões}
+	
+	\begin{defn}
+    	Preenche ua região em A, dado um ponto inicial p.
+	\end{defn}
+	
+	\begin{eq}
+    	$ X_k = ( X_{k-1} \bigoplus B) \cap A^c \qquad k = 1, 2, 3$   
+	\end{eq}
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.3\paperheight]{imagens/fill}
+				\caption{Preenchimento de regions}\label{figLogical}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+			   	\includegraphics[width=4cm, height=0.3\paperheight]{imagens/fill2}
+				\caption{Preenchimento de regions}\label{figLogical}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Extração de componentes conexos}
+	
+	\begin{defn}
+    	Encontra um componente conectado X em A.
+	\end{defn}
+	
+	\begin{eq}
+    	$ X_k = ( X_{k-1} \bigoplus B) \cap A \qquad k = 1, 2, 3$   
+	\end{eq}
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.3\paperheight]{imagens/conecteds}
+				\caption{Componentes conectos}\label{figLogical}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+			   	\includegraphics[width=4cm, height=0.3\paperheight]{imagens/conecteds2}
+				\caption{Componentes conectos}\label{figLogical}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Convex hull}
+	
+	\begin{defn}
+		Encontra o envelopamento convexo de um conjunto A
+	\end{defn}
+	
+	\begin{eq}
+	
+		\begin{align*}
+			X^i_k& = ( X_{k-1} \circledast B^i) \cup A \qquad i = 1, 2, 3, 4 \qquad k = 1, 2, 3,..
+		\end{align*}
+
+	\end{eq}
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.15\paperheight]{imagens/convex_hull}
+				\caption{Preenchimento de regions}\label{figLogical}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[h]
+			   	\includegraphics[height=0.15\paperheight]{imagens/convex_hull2}
+				\caption{Preenchimento de regions}\label{figLogical}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Afinamento}
+	
+	\begin{defn}
+		Encontra o envelopamento convexo de um conjunto A
+	\end{defn}
+	
+	\begin{eq}
+	
+		\begin{align*}
+			A \otimes B &= A - (A \circledast B) \\
+			&= A\cap (A \circledast B)^c
+		\end{align*}
+
+	\end{eq}
+	
+	
+	
 \end{frame}
 
 \end{document}
