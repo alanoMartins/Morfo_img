@@ -56,6 +56,15 @@
 \newtheorem{eq}[theorem]{Equa\c c\~ao}
 
 
+\usepackage{etoolbox}
+\newcommand{\zerodisplayskips}{%
+  \setlength{\abovedisplayskip}{0pt}%
+  \setlength{\belowdisplayskip}{0pt}%
+  \setlength{\abovedisplayshortskip}{0pt}%
+  \setlength{\belowdisplayshortskip}{0pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
 
 
 
@@ -314,15 +323,87 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	\end{defn}
 	
 	\begin{eq}
-	
-		\begin{align*}
-			A \otimes B &= A - (A \circledast B) \\
-			&= A\cap (A \circledast B)^c
-		\end{align*}
+	$ A \otimes B = A - (A \circledast B)$  OU\\
+	$ A\cap (A \circledast B)^c$
 
 	\end{eq}
 	
 	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Afinamento}
+	
+	\begin{figure}[h]
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/afinamento}
+		\caption{Afinamento}\label{figLogical}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Espessamento}
+	
+	\begin{defn}
+		Aumenta a espessura de um conjunto A
+	\end{defn}
+	
+	\begin{eq}
+			$ A \odot B = A \cup (A \circledast B) $
+	\end{eq}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Espessamento}
+	
+	\begin{figure}[h]
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/espessamento}
+		\caption{Espessamento}\label{figLogical}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Esqueleto}
+	
+	\begin{defn}
+		Aumenta a espessura de um conjunto A
+	\end{defn}
+	
+	\begin{eq}
+		\begin{align*}
+				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \}
+		\end{align*}
+	\end{eq}
+	
+	Reconstrução de A:
+	
+	\begin{eq}
+		\begin{align}
+				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \}
+		\end{align}
+	\end{eq}
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Poda}
+	
+	\begin{defn}
+		Aumenta a espessura de um conjunto A
+	\end{defn}
+	
+	\begin{eq}
+			\begin{align}
+				X_1 &= A \otimes B \\
+				X_2 &= \bigcup^8_{k=1} (X_1 \circledast B^k) \\
+				X_3 &= (X_2 \oplus H) \cap A \\
+				X_4 &= X_1 \cup X_3
+		\end{align}
+	\end{eq}
 	
 \end{frame}
 
