@@ -301,13 +301,13 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.15\paperheight]{imagens/convex_hull}
-				\caption{Preenchimento de regions}\label{figLogical}
+				\caption{Convex hull}\label{figLogical}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 			   	\includegraphics[height=0.15\paperheight]{imagens/convex_hull2}
-				\caption{Preenchimento de regions}\label{figLogical}
+				\caption{Convex hull}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -428,21 +428,125 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 \begin{frame}
 	\frametitle{Morfologia - Imagens monocromáticas}
 	
-	\ \begin{itemize}
-		\item NOT
-		\item AND
-		\item OR
-		\item XOR
-		\item NOT-AND
+	\begin{itemize}
+		\item Dilatação e Erosão
+		\item Abertura e Fechamento
+		\item Realce de contraste
+		\item Granulometria
+		\item Atenuação de ruidos 
 	\end{itemize}
 	
-	\begin{eq}
-	$ A \otimes B = A - (A \circledast B)$  OU\\
-	$ A\cap (A \circledast B)^c$
+	
+\end{frame}
 
+\begin{frame}
+	\frametitle{Dilatação e Erosão - Imagens monocromáticas}
+	
+	\begin{defn}
+		Similar a imagens binárias
+	\end{defn}
+	
+	\begin{eq}
+			$ (f \oplus b)(x,y) = max \{ f(x-m, y-n) + b(m,n \} $ \\
+			$ (f \circleddash b)(x,y) = min \{ f(x-m, y-n) + b(m,n \} $
 	\end{eq}
 	
 	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Abertura e Fechamento - Imagens monocromáticas}
+	
+	\begin{defn}
+		Similar a imagens binárias
+	\end{defn}
+	
+	\begin{eq}
+			$ (f \circ b) =  (f \circleddash b) \oplus b $ \\
+			$ (f \bullet b) =  (f \oplus  b) \circleddash b $ 
+	\end{eq}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Realce de contraste - Imagens monocromáticas}
+	
+	\begin{defn}
+		Realce de contraste para imagem
+	\end{defn}
+	
+	\begin{eq}
+			$ TH(f) = f - (f \circ b) $ \\
+			$ BH(f) = (f \bullet b) - f $ \\
+			$ g = f +  TH(f) - BH(f) $ 
+	\end{eq}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Realce de contraste - Imagens monocromáticas}
+
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+		Top-Hat: 
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.2\paperheight]{imagens/tophat}
+			\end{figure}
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.2\paperheight]{imagens/tophat1}
+				\caption{Top Hat}\label{figLogical}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+		Black-Hat:
+			\begin{figure}[h]
+			   	\includegraphics[height=0.2\paperheight]{imagens/blackhat}
+			\end{figure}
+			\begin{figure}[h]
+	  		 	\includegraphics[height=0.2\paperheight]{imagens/blackhat1}
+				\caption{Black Hat}\label{figLogical}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Realce de contraste - Imagens monocromáticas}
+	
+	Aplicação do realce: 
+	\begin{figure}[h]
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/realce1}
+		\caption{Realce}\label{figLogical}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Granulometria}
+	
+	\begin{defn}
+		Estimativa da distribuição de tamanhos de objeto em uma imagem
+	\end{defn}
+	
+	\begin{figure}[h]
+	 	\includegraphics[height=0.5\paperheight]{imagens/granulometria}
+		\caption{Granulometria}\label{figLogical}
+	\end{figure}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Atenuação de ruidos}
+	
+	\begin{defn}
+		AAbertura da imagem para redução de pontos brancos isolados e fechamento para redução de pontos pretos isolados
+	\end{defn}
+	
+	\begin{figure}[h]
+	 	\includegraphics[height=0.4\paperheight]{imagens/reducaoruidos}
+		\caption{Redução de ruidos}\label{figLogical}
+	\end{figure}
+
 \end{frame}
 
 \end{document}
