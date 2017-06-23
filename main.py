@@ -1,37 +1,56 @@
 import numpy as np
 import cv2
 from morfology import Morfology
+import time
 
 DEBUG = False
 
-def erosion(img):
-    kernel = np.ones((5, 5), np.uint8)
-    return cv2.erode(img, kernel, iterations=1)
+face_cascade = cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml')
+
+def findFace(gray):
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    # bw = prepare(gray)
+    # ret, bw = cv2.threshold(gray, 127, 255, 0)
+    # result = m.flood(bw)
+
+    for (x, y, w, h) in faces:
+        gray = gray[y:y + w, x:x + h]
+        gray = cv2.rectangle(gray, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        if len(gray) > 10:
+            return gray
+
 
 def init():
-    cap = cv2.VideoCapture(0)
+    #cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('sample1.avi')
     m = Morfology(True)
 
     while (True):
         # Capture frame-by-frame
         ret, frame = cap.read()
 
+        if frame is None:
+            break
+
         # Our operations on the frame come here
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        #bw = prepare(gray)
-        ret, bw = cv2.threshold(gray, 127, 255, 0)
-        #result = m.flood(bw)
-        result = m.extract_boundry(bw)
+
+        thinkness = m.thinkness(gray)
+        cv2.imshow('Thinkness', thinkness)
+
+        thinning = m.thinning(gray)
+        cv2.imshow('Thinning', thinning)
+
+        skeleton = m.skeleton(gray)
+        cv2.imshow('Skeleton', skeleton)
+
+        border = m.extract_boundry(gray)
+        cv2.imshow('Border', border)
 
 
+        time.sleep(0.5)
 
-
-
-        # Display the resulting frame
-        cv2.imshow('frame', result)
-        cv2.imshow('cnt', gray)
-        cv2.imshow('bw', bw)
-        #cv2.imshow('hull', hull)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
@@ -39,21 +58,19 @@ def init():
     cap.release()
     cv2.destroyAllWindows()
 
-def prepare(image):
-    blur = cv2.GaussianBlur(image, (5, 5), 0)
-    rect, th1 = cv2.threshold(blur, 0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-    return th1
-
-def contour(gray, bw):
+def basicOperations(img):
     m = Morfology(True)
-    result, contours, hierarchy = m.extract_boundry(bw)
 
-    cv2.drawContours(gray, contours, -1, (0, 255, 0), 3)
-    cv2.imshow('cnt', gray)
-    cv2.imshow('bw', bw)
+    opened = m.opening(img)
+    closed = m.closing(img)
+    eroded = m.erode(img)
+    dilated = m.dilate(img)
+    hitnmiss = m.hitnmiss(img)
 
-
-
-
+    cv2.imshow('Dilatation', dilated)
+    cv2.imshow('Erosion', eroded)
+    cv2.imshow('Closing', closed)
+    cv2.imshow('Openning', opened)
+    cv2.imshow('HitnMiss', hitnmiss)
 
 init()

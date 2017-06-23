@@ -368,7 +368,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	\frametitle{Esqueleto}
 	
 	\begin{defn}
-		Aumenta a espessura de um conjunto A
+		Processo de redução da região foreground, preservando a extensão e conectividade.
 	\end{defn}
 	
 	\begin{eq}
@@ -384,8 +384,16 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \}
 		\end{align}
 	\end{eq}
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Esqueleto}
 	
-	
+	\begin{figure}[h]
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/skeleton1}
+		\caption{Esqueleto}\label{figLogical}
+	\end{figure}
 	
 \end{frame}
 
@@ -404,6 +412,36 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 				X_4 &= X_1 \cup X_3
 		\end{align}
 	\end{eq}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Poda}
+	
+	\begin{figure}[h]
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/prunning}
+		\caption{Poda}\label{figLogical}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Morfologia - Imagens monocromáticas}
+	
+	\ \begin{itemize}
+		\item NOT
+		\item AND
+		\item OR
+		\item XOR
+		\item NOT-AND
+	\end{itemize}
+	
+	\begin{eq}
+	$ A \otimes B = A - (A \circledast B)$  OU\\
+	$ A\cap (A \circledast B)^c$
+
+	\end{eq}
+	
 	
 \end{frame}
 
