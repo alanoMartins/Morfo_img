@@ -373,16 +373,11 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{eq}
 		\begin{align*}
-				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \}
+				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \} \\
+				\textsf{ Reconstrução}: \\
+				S(A) = \bigcup^k_{k=0} (S_k(A) \oplus kB)
 		\end{align*}
-	\end{eq}
 	
-	Reconstrução de A:
-	
-	\begin{eq}
-		\begin{align}
-				S(A) = \bigcup^k_{k=0} \{ (A \circleddash kB) - [(A \circleddash kB) \circ B] \}
-		\end{align}
 	\end{eq}
 		
 \end{frame}
