@@ -1,5 +1,4 @@
 import cv2
-import imutils
 import numpy as np
 
 class Morfology:
@@ -58,60 +57,30 @@ class Morfology:
         j34 = cv2.bitwise_or(r3, r4)
         return cv2.bitwise_or(j12, j34)
 
-    def ch(self, image):
-        ret, thresh = cv2.threshold(image, 160, 255, 0)
-        result, contours, hierarchy = cv2.findContours(thresh, 2, 1)
-        print(len(contours))
-        cnt = contours[0]
+    def conex_hull_image(self, img):
+        img = cv2.pyrDown(img)
+        # threshold image
+        ret, threshed_img = cv2.threshold(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY),
+                                          127, 255, cv2.THRESH_BINARY)
+        # get contours from image
+        image, contours, hier = cv2.findContours(threshed_img, cv2.RETR_EXTERNAL,
+                                                 cv2.CHAIN_APPROX_SIMPLE)
 
-        hull = cv2.convexHull(cnt, returnPoints=False)
-        defects = cv2.convexityDefects(cnt, hull)
-
-        if defects is not None:
-            for i in range(defects.shape[0]):
-                s, e, f, d = defects[i, 0]
-                start = tuple(cnt[s][0])
-                end = tuple(cnt[e][0])
-                far = tuple(cnt[f][0])
-                cv2.line(image, start, end, [0, 255, 0], 2)
-                cv2.circle(image, far, 5, [0, 0, 255], -1)
-
-        return image
-
-    def convex_hull(self, img):
-        thresh = self.binarize(img)
-        cv2.imshow('T', thresh)
-        result, contours, hierarchy = cv2.findContours(thresh, 2, 1)
-        print(len(contours))
-        cnt = contours[0]
-
-        c = max(contours, key=cv2.contourArea)
-        area = cv2.contourArea(cnt)
-
-        perimeter = cv2.arcLength(cnt, True)
-
-        hull = cv2.convexHull(cnt)
-
-        #hull = [cv2.convexHull(contours[i]) for i in range(len(contours))]
-
-        #contours = contours[0]
-        #area = cv2.contourArea(contours)
-        #c = max(contours, key=cv2.contourArea)
-
-        cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-
-
-        for i in range(len(contours)):
-            cv2.drawContours(img, hull, i, (0, 255, 0), 1, 8)
-
-        cv2.drawContours(img, hull, -1, (0, 255, 0), 3)
-        #cv2.drawContours(img, contours, -1, (255, 255, 0), 3)
+        # for each contour
+        for cnt in contours:
+            # get convex hull
+            hull = cv2.convexHull(cnt)
+            # draw it in red color
+            cv2.drawContours(img, [hull], -1, (0, 0, 255), 1)
 
         return img
 
     def flood(self, img):
-        mask = np.zeros((len(img)+2,len(img[0])+2),np.uint8)
-        return  cv2.floodFill(img, mask, (100, 100), 0)
+        #img = self.binarize(img)
+        mask = np.zeros((len(img)+2, len(img[0])+2),np.uint8)
+        seed = (100, 100)
+        cv2.floodFill(img, mask, seed, (255, 255, 255), 100, 100, cv2.FLOODFILL_FIXED_RANGE)
+        return cv2.circle(img, seed, 2, (0, 0, 255), -1)
 
     def extract_boundry(self, img):
         gray = cv2.GaussianBlur(img, (5, 5), 0)
@@ -145,7 +114,7 @@ class Morfology:
         skel = np.zeros(img.shape, np.uint8)
         done = False
 
-        while (not done):
+        while not done:
             eroded = cv2.erode(img, element)
             temp = cv2.dilate(eroded, element)
             temp = cv2.subtract(img, temp)
@@ -161,6 +130,20 @@ class Morfology:
     def thinkness(self, img):
         bw = self.binarize(img)
         return cv2.bitwise_or(bw, self.hitnmiss(img))
+
+    def thinkness10(self, img):
+        bw = self.binarize(img)
+        res1 = cv2.bitwise_or(bw, self.hitnmiss(img))
+        res2 = cv2.bitwise_or(bw, res1)
+        res3 = cv2.bitwise_or(bw, res2)
+        res4 = cv2.bitwise_or(bw, res3)
+        res5 = cv2.bitwise_or(bw, res4)
+        res6 = cv2.bitwise_or(bw, res5)
+        res7 = cv2.bitwise_or(bw, res6)
+        res8 = cv2.bitwise_or(bw, res7)
+        res9 = cv2.bitwise_or(bw, res8)
+        res10 = cv2.bitwise_or(bw, res9)
+        return cv2.bitwise_or(bw, res10)
 
     def thinning(self, img):
         bw = self.binarize(img)
@@ -179,3 +162,15 @@ class Morfology:
         res9 = cv2.bitwise_and(bw, res8)
         res10 = cv2.bitwise_and(bw, res9)
         return cv2.bitwise_and(bw, res10)
+
+    def top_hat(self, img):
+        element = np.ones((5, 5), np.uint8)
+        return cv2.morphologyEx(img, cv2.MORPH_TOPHAT, element)
+
+    def black_hat(self, img):
+        element = np.ones((5,5),np.uint8)
+        return cv2.morphologyEx(img, cv2.MORPH_BLACKHAT, element)
+
+    def gradient(self, img):
+        element = np.ones((5,5),np.uint8)
+        return cv2.morphologyEx(img, cv2.MORPH_GRADIENT, element)

@@ -30,23 +30,53 @@ def init():
         # Capture frame-by-frame
         ret, frame = cap.read()
 
+        #frame = cv2.imread('ch_ex.png')
+
         if frame is None:
             break
 
         # Our operations on the frame come here
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #gray = frame
 
-        thinkness = m.thinkness(gray)
+        basicImage = gray.copy()
+        basicOperations(basicImage)
+
+        # chImage = gray.copy()
+        # convexHull = m.ch2(chImage)
+        # cv2.imshow('ConvexHull', convexHull)
+
+        tkImage = gray.copy()
+        thinkness = m.thinkness(tkImage)
         cv2.imshow('Thinkness', thinkness)
 
-        thinning = m.thinning(gray)
+        tnImage = gray.copy()
+        thinning = m.thinning10(tnImage)
         cv2.imshow('Thinning', thinning)
 
-        skeleton = m.skeleton(gray)
+        skImage = gray.copy()
+        skeleton = m.skeleton(skImage)
         cv2.imshow('Skeleton', skeleton)
 
-        border = m.extract_boundry(gray)
+        brImage = gray.copy()
+        border = m.extract_boundry(brImage)
         cv2.imshow('Border', border)
+
+        flImage = gray.copy()
+        flood = m.flood(flImage)
+        cv2.imshow('Flood', flood)
+
+        thimage = gray.copy()
+        top_hat = m.top_hat(thimage)
+        cv2.imshow('Top_hat', top_hat)
+
+        bhimage = gray.copy()
+        black_hat = m.black_hat(bhimage)
+        cv2.imshow('Blakc_hat', black_hat)
+
+        gdimage = gray.copy()
+        gradient = m.gradient(gdimage)
+        cv2.imshow('Gradient', gradient)
 
 
         time.sleep(0.5)
