@@ -68,6 +68,7 @@
 
 
 
+
 \begin{document}
 
 \begin{frame}
@@ -106,7 +107,6 @@ Interceção: $C = A \cup B $
 
 Subtração: $C = A - B $ 
 
-Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$ 
 
   \begin{figure}[h]
     \centering
@@ -213,13 +213,13 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 	  		 	\includegraphics[width=4cm, height=0.25\paperheight]{imagens/border_ex1}
-				\caption{Extração de bordas 1}\label{figLogical}
+				\caption{Extração de bordas 1}\label{figBorder1}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 			   	\includegraphics[width=4cm, height=0.25\paperheight]{imagens/border_ex2}
-				\caption{Extração de bordas 2}\label{figLogical}
+				\caption{Extração de bordas 2}\label{figBorder2}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -234,20 +234,20 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	\end{defn}
 	
 	\begin{eq}
-    	$ X_k = ( X_{k-1} \bigoplus B) \cap A^c \qquad k = 1, 2, 3$   
+    	$ X_k = ( X_{k-1} \oplus B) \cap A^c \qquad k = 1, 2, 3$   
 	\end{eq}
 	
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.3\paperheight]{imagens/fill}
-				\caption{Preenchimento de regions}\label{figLogical}
+				\caption{Preenchimento de regiões}\label{figRegion1}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 			   	\includegraphics[width=4cm, height=0.3\paperheight]{imagens/fill2}
-				\caption{Preenchimento de regions}\label{figLogical}
+				\caption{Preenchimento de regiões}\label{figRegion2}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -262,20 +262,20 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	\end{defn}
 	
 	\begin{eq}
-    	$ X_k = ( X_{k-1} \bigoplus B) \cap A \qquad k = 1, 2, 3$   
+    	$ X_k = ( X_{k-1} \oplus B) \cap A \qquad k = 1, 2, 3$   
 	\end{eq}
 	
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.3\paperheight]{imagens/conecteds}
-				\caption{Componentes conectos}\label{figLogical}
+				\caption{Componentes conectos}\label{figConecteds1}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 			   	\includegraphics[width=4cm, height=0.3\paperheight]{imagens/conecteds2}
-				\caption{Componentes conectos}\label{figLogical}
+				\caption{Componentes conectos}\label{figConecteds2}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -301,7 +301,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 		\begin{column}{0.5\textwidth}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.15\paperheight]{imagens/convex_hull}
-				\caption{Convex hull}\label{figLogical}
+				\caption{Convex hull}\label{figConvexHull1}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
@@ -336,7 +336,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{figure}[h]
 	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/afinamento}
-		\caption{Afinamento}\label{figLogical}
+		\caption{Afinamento}\label{figThinn}
 	\end{figure}
 	
 \end{frame}
@@ -359,7 +359,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{figure}[h]
 	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/espessamento}
-		\caption{Espessamento}\label{figLogical}
+		\caption{Espessamento}\label{figThinkess}
 	\end{figure}
 	
 \end{frame}
@@ -387,7 +387,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{figure}[h]
 	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/skeleton1}
-		\caption{Esqueleto}\label{figLogical}
+		\caption{Esqueleto}\label{figSkeleton}
 	\end{figure}
 	
 \end{frame}
@@ -414,8 +414,8 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	\frametitle{Poda}
 	
 	\begin{figure}[h]
-	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/prunning}
-		\caption{Poda}\label{figLogical}
+	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/prunninga}
+		\caption{Poda}\label{figPrune}
 	\end{figure}
 	
 \end{frame}
@@ -488,7 +488,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 			\end{figure}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.2\paperheight]{imagens/tophat1}
-				\caption{Top Hat}\label{figLogical}
+				\caption{Top Hat}\label{figCont1}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
@@ -498,7 +498,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 			\end{figure}
 			\begin{figure}[h]
 	  		 	\includegraphics[height=0.2\paperheight]{imagens/blackhat1}
-				\caption{Black Hat}\label{figLogical}
+				\caption{Black Hat}\label{figCont2}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -511,7 +511,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	Aplicação do realce: 
 	\begin{figure}[h]
 	 	\includegraphics[width=0.6\paperwidth,height=0.6\paperheight]{imagens/realce1}
-		\caption{Realce}\label{figLogical}
+		\caption{Realce}\label{figCont3}
 	\end{figure}
 	
 \end{frame}
@@ -525,7 +525,7 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{figure}[h]
 	 	\includegraphics[height=0.5\paperheight]{imagens/granulometria}
-		\caption{Granulometria}\label{figLogical}
+		\caption{Granulometria}\label{figGranulo}
 	\end{figure}
 
 \end{frame}
@@ -539,15 +539,18 @@ Complementar: $A^{c} = \{w \,|\, w \not\in A  \}$
 	
 	\begin{figure}[h]
 	 	\includegraphics[height=0.4\paperheight]{imagens/reducaoruidos}
-		\caption{Redução de ruidos}\label{figLogical}
+		\caption{Redução de ruidos}\label{figNoise}
 	\end{figure}
 
 \end{frame}
 
+
+\nocite{*}
+
 \begin{frame}
 	\frametitle{Bibliografia}
 	
-\bibliography{ref}
+\bibliography{refs}
 \bibliographystyle{plain}
 
 \end{frame}

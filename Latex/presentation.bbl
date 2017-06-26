@@ -1,3 +1,14 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{Gonzalez02a}
+Rafael~C. Gonzalez and Richard~E. Woods.
+\newblock {\em Digital Image Processing (2nd Ed)}.
+\newblock Prentice Hall, 2002.
+
+\bibitem{Pedrini:2007:PI}
+H.~Pedrini and W.~R. Schwartz.
+\newblock {\em {Análise de Imagens Digitais: Princípios, Algoritmos e
+  Aplicações}}.
+\newblock Editora Thomson Learning, 2007.
 
 \end{thebibliography}
